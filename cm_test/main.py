@@ -17,6 +17,7 @@ while True:
         # make the socket blocking
         s.setblocking(True)
         s.send('Ping DR 0')
+        print('PING DR 0')
         s.setblocking(False)
         # print time
         delta = ticks_diff(ticks_us(), t)
@@ -38,6 +39,7 @@ while True:
         # make the socket blocking
         s.setblocking(True)
         s.send('Ping DR 1')
+        print('PING DR 1')
         s.setblocking(False)
         # print time
         delta = ticks_diff(ticks_us(), t)
@@ -59,6 +61,7 @@ while True:
         # make the socket blocking
         s.setblocking(True)
         s.send('Ping DR 2')
+        print('PING DR 2')
         s.setblocking(False)
         # print time
         delta = ticks_diff(ticks_us(), t)
@@ -80,6 +83,7 @@ while True:
         # make the socket blocking
         s.setblocking(True)
         s.send('Ping DR 3')
+        print('PING DR 3')
         s.setblocking(False)
         # print time
         delta = ticks_diff(ticks_us(), t)
@@ -101,6 +105,7 @@ while True:
         # make the socket blocking
         s.setblocking(True)
         s.send('Ping DR 4')
+        print('PING DR 4')
         s.setblocking(False)
         # print time
         delta = ticks_diff(ticks_us(), t)
@@ -122,6 +127,7 @@ while True:
         # make the socket blocking
         s.setblocking(True)
         s.send('Ping DR 5')
+        print('PING DR 5')
         s.setblocking(False)
         # print time
         delta = ticks_diff(ticks_us(), t)
@@ -143,6 +149,7 @@ while True:
         # make the socket blocking
         s.setblocking(True)
         s.send('Ping DR 6')
+        print('PING DR 6')
         s.setblocking(False)
         # print time
         delta = ticks_diff(ticks_us(), t)
@@ -158,5 +165,3 @@ while True:
         sleep(5)
     else:
         i = 0
-
-
