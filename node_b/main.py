@@ -5,7 +5,6 @@ from machine import Pin
 import machine
 
 
-button = Pin('P10', mode = Pin.IN, pull = Pin.PULL_UP)
 
 # Please pick the region that matches where you are using the device
 
@@ -14,69 +13,37 @@ s = socket.socket(socket.AF_LORA, socket.SOCK_RAW)
 s.setblocking(False)
 
 i = 0
-def increment_counter(pin):
-    global i
-    if i == 6:
-        i = 0
-    else:
-        i = i + 1
-    print('MODE ', i)
+if i == 0:
+    lora.bandwidth(LoRa.BW_125KHZ)
+    lora.sf(12)
+#bit rate = 440 bit/s
+elif i == 1:
+    lora.bandwidth(LoRa.BW_125KHZ)
+    lora.sf(11)
+#bit rate = 980 bit/s
+elif i == 2:
+    lora.bandwidth(LoRa.BW_125KHZ)
+    lora.sf(10)
+#bit rate = 1760 bit/s
+elif i == 3:
+    lora.bandwidth(LoRa.BW_125KHZ)
+    lora.sf(9)
+#bit rate = 3125 bit/s
+elif i == 4:
+    lora.bandwidth(LoRa.BW_125KHZ)
+    lora.sf(8)
+#bit rate = 5470 bit/s
+elif i == 5:
+    lora.bandwidth(LoRa.BW_125KHZ)
+    lora.sf(7)
+#data rate = 11000 bit/s
+elif i == 6:
+    lora.bandwidth(LoRa.BW_250KHZ)
+    lora.sf(7)
 
-button.callback(trigger=Pin.IRQ_FALLING, handler=increment_counter)
-
-
+pkt = 'PONG MODE ' + str(i)
 while True:
-    if i == 0:
-        lora.bandwidth(LoRa.BW_125KHZ)
-        lora.sf(12)
-    elif i == 1:
-        lora.bandwidth(LoRa.BW_125KHZ)
-        lora.sf(11)
-    elif i == 2:
-        lora.bandwidth(LoRa.BW_125KHZ)
-        lora.sf(10)
-    elif i == 3:
-        lora.bandwidth(LoRa.BW_125KHZ)
-        lora.sf(9)
-    elif i == 4:
-        lora.bandwidth(LoRa.BW_125KHZ)
-        lora.sf(8)
-    elif i == 5:
-        lora.bandwidth(LoRa.BW_125KHZ)
-        lora.sf(7)
-    elif i == 6:
-        lora.bandwidth(LoRa.BW_250KHZ)
-        lora.sf(7)
-    if s.recv(64) == b'Ping DR 0':
-        s.send('Pong DR 0')
-        print('Pong DR 0')
-        time.sleep(5)
-    elif s.recv(64) == b'Ping DR 1':
-        s.send('Pong DR 1')
-        print('Pong DR 1')
-        time.sleep(5)
-    elif s.recv(64) == b'Ping DR 2' :
-        s.send('Pong DR 2')
-        print('Pong DR 2')
-        time.sleep(5)
-    elif s.recv(64) == b'Ping DR 3' :
-        s.send('Pong DR 3')
-        print('Pong DR 3')
-        time.sleep(5)
-    elif s.recv(64) == b'Ping DR 4' :
-        s.send('Pong DR 4')
-        print('Pong DR 4')
-        time.sleep(5)
-    elif s.recv(64) == b'Ping DR 5' :
-        s.send('Pong DR 5')
-        print('Pong DR 5')
-        time.sleep(5)
-    elif s.recv(64) == b'Ping DR 6' :
-        s.send('Pong DR 6')
-        print('Pong DR 6')
-        time.sleep(5)
-
-def rnd_triage():
-    global i
-    i += 1
-    print('MODE %d\n', i)
+    if s.recv(64) == b'PING':
+        s.send(pkt)
+        print(pkt)
+    time.sleep(5)
