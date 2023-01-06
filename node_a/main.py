@@ -7,7 +7,8 @@ from utime import ticks_us, ticks_diff, sleep
 lora = LoRa(mode=LoRa.LORA, region=LoRa.EU868)
 s = socket.socket(socket.AF_LORA, socket.SOCK_RAW)
 s.setblocking(False)
-i = 1
+i = 0
+#lora.tx_power(2)
 
 if i == 0:
     lora.bandwidth(LoRa.BW_125KHZ)
@@ -28,7 +29,7 @@ elif i == 5:
     lora.bandwidth(LoRa.BW_250KHZ)
     lora.sf(9)
 elif i == 6:
-    lora.bandwidth(LoRa.BW_125KHZ)
+    lora.bandwidth(LoRa.BW_250KHZ)
     lora.sf(7)
 
 while True:
@@ -36,13 +37,14 @@ while True:
     # make the socket blocking
     s.setblocking(True)
     s.send('PING')
-    print('PING')
     s.setblocking(False)
     # print time
     delta = ticks_diff(ticks_us(), t)
     print("Sent. TX Time =", delta/1000)
     # get any data received (if any...)
     data = s.recv(64)
+    #if data == b'ACK':
+        #break
     print("Received:", data)
     # print stats of last packet
     print("Stats:", lora.stats())
